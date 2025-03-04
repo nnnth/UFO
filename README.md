@@ -1,7 +1,7 @@
 # Unifying Fine-Grained Perception into MLLMs Without Task Decoders. Segmentation by Embedding Retrieval
 <h5 align="center">
 
-[![arXiv](https://img.shields.io/badge/Arxiv-2222.33333-b31b1b.svg?logo=arXiv)](https://arxiv.org/abs/2222.33333)
+[![arXiv](https://img.shields.io/badge/Arxiv-2503.01342-b31b1b.svg?logo=arXiv)](http://arxiv.org/abs/2503.01342)
 [![License](https://img.shields.io/badge/License-Apache%202.0-yellow)](https://github.com/nnnth/UFO/blob/main/LICENSE) 
 [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fnnnth%2FUFO%2Ftree%2Fmain&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
 [![GitHub issues](https://img.shields.io/github/issues/nnnth/UFO?color=critical&label=Issues)](https://github.com/nnnth/UFO/issues)
@@ -11,7 +11,7 @@
   <img src="assets/demo.png" width="800"/>
 </div>
 
-This repo is the official implementation of paper: 🛸 [UFO: A Unified Approach to Fine-grained Visual Perception via Open-ended Language Interface](http://arxiv.org/abs/2308.07732) as well as the follow-ups. We have made every effort to ensure that the codebase is clean, concise, easily readable, state-of-the-art, and relies only on minimal dependencies.
+This repo is the official implementation of paper: 🛸 [UFO: A Unified Approach to Fine-grained Visual Perception via Open-ended Language Interface](http://arxiv.org/abs/2503.01342) as well as the follow-ups. We have made every effort to ensure that the codebase is clean, concise, easily readable, state-of-the-art, and relies only on minimal dependencies.
 
 > UFO: A Unified Approach to Fine-grained Visual Perception via Open-ended Language Interface
 >
@@ -20,7 +20,7 @@ This repo is the official implementation of paper: 🛸 [UFO: A Unified Approach
 
 ## 📣 News
 - [25-3-4] 🚀 Training and inference Code is released.
-- [25-3-3] 👀 UFO is released on [arXiv](http://arxiv.org/abs/2308.07732).
+- [25-3-3] 👀 UFO is released on [arXiv](http://arxiv.org/abs/2503.01342).
 
 ## Overview
 - [👀 Todo](https://github.com/nnnth/UFO?tab=readme-ov-file#-todo)
@@ -32,7 +32,7 @@ This repo is the official implementation of paper: 🛸 [UFO: A Unified Approach
 
 ## 👀 Todo
 
-- [x] Release the [arXiv](http://arxiv.org/abs/2308.07732) version.
+- [x] Release the [arXiv](http://arxiv.org/abs/2503.01342) version.
 - [x] Release code and models of multi-task training on UFO-ViT.
 - [x] Release code and models of fine-grained instruction tuning on UFO-InternVL2-8B and UFO-LLaVA-1.5-7B.
 - [x] Release full code and models of multi-task training on UFO-InternVL2-8B.
