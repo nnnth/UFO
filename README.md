@@ -183,7 +183,7 @@ Please consider citing our work as follows if it is helpful.
 @article{tang2025ufo,
     title={UFO: A Unified Approach to Fine-grained Visual Perception via Open-ended Language Interface},
     author={ Hao Tang, Chenwei Xie, Haiyang Wang, Xiaoyi Bao, Tingyu Weng, Pandeng Li, Yun Zheng, Liwei Wang},
-    booktitle={arXiV},
+    journal={arXiV:2503.01342},
     year={2025}
 }
 ```
