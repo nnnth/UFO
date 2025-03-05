@@ -1,6 +1,7 @@
 # Unifying Fine-Grained Perception into MLLMs Without Task Decoders. Segmentation by Embedding Retrieval
 <h5 align="center">
 
+[![hf_paper](https://img.shields.io/badge/🤗-Paper%20In%20HF-red.svg)](https://huggingface.co/papers/2503.01342)
 [![arXiv](https://img.shields.io/badge/Arxiv-2503.01342-b31b1b.svg?logo=arXiv)](http://arxiv.org/abs/2503.01342)
 [![License](https://img.shields.io/badge/License-Apache%202.0-yellow)](https://github.com/nnnth/UFO/blob/main/LICENSE) 
 [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fnnnth%2FUFO%2Ftree%2Fmain&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
