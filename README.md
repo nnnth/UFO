@@ -9,7 +9,7 @@
 [![GitHub closed issues](https://img.shields.io/github/issues-closed/nnnth/UFO?color=success&label=Issues)](https://github.com/nnnth/UFO/issues?q=is%3Aissue%20state%3Aclosed)  <br>
 </h5>
 <div align="center">
-  <img src="assets/demo.png" width="800"/>
+  <img src="assets/demo2.png" width="800"/>
 </div>
 
 This repo is the official implementation of paper: 🛸 [UFO: A Unified Approach to Fine-grained Visual Perception via Open-ended Language Interface](http://arxiv.org/abs/2503.01342) as well as the follow-ups. We have made every effort to ensure that the codebase is clean, concise, easily readable, state-of-the-art, and relies only on minimal dependencies.
