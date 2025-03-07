@@ -1,4 +1,4 @@
-# Unifying Fine-grained Perception into MLLMs w/o Task Decoders. Segment by Embedding Retrieval
+# Unifying Fine-grained Perception into MLLMs w/o Task Decoders. 16 tokens enable precise segmentation
 <h5 align="center">
 
 [![hf_paper](https://img.shields.io/badge/🤗-Paper%20In%20HF-red.svg)](https://huggingface.co/papers/2503.01342)
