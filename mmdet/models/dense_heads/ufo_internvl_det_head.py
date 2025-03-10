@@ -56,12 +56,6 @@ class UFOInternVLDetHead(BaseModule):
         self.sample_prob = sample_prob
         self.dataset_labels = dataset_labels
 
-        # read v3det label and cache
-        v3det_labels = []
-        with open("data/V3Det/annotations/category_name_13204_v3det_2023_v1.txt") as f:
-            for line in f.readlines():
-                v3det_labels.append(line.strip())
-        self.v3det_labels = v3det_labels
         self._init_layers()
 
     def _init_layers(self) -> None:
@@ -77,10 +71,7 @@ class UFOInternVLDetHead(BaseModule):
     
     def get_prompt(self, batch_data_samples):
         dataset_name = batch_data_samples[0].metainfo['dataset_name']
-        if dataset_name == 'v3det':
-            classes = self.v3det_labels
-        else:
-            classes = list(self.dataset_labels[dataset_name])
+        classes = list(self.dataset_labels[dataset_name])
 
         num_classes = batch_data_samples[0].metainfo['head_cfg']['num_classes']
         num_bins = batch_data_samples[0].metainfo['head_cfg']['num_bins']
@@ -92,10 +83,7 @@ class UFOInternVLDetHead(BaseModule):
         if torch.rand(1)[0] > self.sample_prob:
             return self.get_prompt(batch_data_samples)
         dataset_name = batch_data_samples[0].metainfo['dataset_name']
-        if dataset_name == 'v3det':
-            classes = self.v3det_labels
-        else:
-            classes = list(self.dataset_labels[dataset_name])
+        classes = list(self.dataset_labels[dataset_name])
 
         num_classes = batch_data_samples[0].metainfo['head_cfg']['num_classes']
         num_bins = batch_data_samples[0].metainfo['head_cfg']['num_bins']
@@ -126,10 +114,7 @@ class UFOInternVLDetHead(BaseModule):
     
     def translate_text(self,targets_tokens_tensor, batch_img_metas):
         dataset_name = batch_img_metas[0]['dataset_name']
-        if dataset_name == 'v3det':
-            classes = self.v3det_labels + ['background']
-        else:
-            classes = list(self.dataset_labels[dataset_name]) + ['background']
+        classes = list(self.dataset_labels[dataset_name]) + ['background']
 
         num_classes = batch_img_metas[0]['head_cfg']['num_classes']
         num_bins = batch_img_metas[0]['head_cfg']['num_bins']
