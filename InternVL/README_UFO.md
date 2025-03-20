@@ -11,7 +11,7 @@ python tools/merge_lora_custom.py ../pretrained/InternVL2-8B ../pretrained/UFO-I
 Then run commands to evaluate on RefCOCO series. Following command is for RefCOCO val:
 
 ```shell
-GPUS=8 bash evalulate_ufo.sh ../pretrained/UFO-InternVL2-8B-instruct refcoco-val
+GPUS=8 bash evaluate_ufo.sh ../pretrained/UFO-InternVL2-8B-instruct refcoco-val
 ```
 
 **Please note that the current InternVL repository does not support perception tasks beyond REC (such as RES and inferential segmentation). We will migrate the code as soon as possible.**

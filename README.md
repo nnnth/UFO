@@ -145,6 +145,8 @@ UFO
 |──|──bert_embed_large.pt
 |──|──bert_embed_huge.pt
 ```
+For InternVL2-8B, we add a custom function for lora training. Please replace the original file following [issue](https://github.com/nnnth/UFO/issues/6).
+
 ### Demo
 Please download checkpoints from [kanashi6/UFO](https://huggingface.co/kanashi6/UFO), then save them under root dir:
 ```
