@@ -141,6 +141,7 @@ UFO
 |──|──llava-1.5-7b-hf
 |──|──InternVL2-8B
 |──|──bert-base-uncased
+|──|──bert_embed_womask.pt
 |──|──bert_embed.pt
 |──|──bert_embed_large.pt
 |──|──bert_embed_huge.pt

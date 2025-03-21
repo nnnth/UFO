@@ -40,7 +40,7 @@ model = dict(
         drop_path_rate=0.1,
         init_cfg=dict(type='Pretrained', checkpoint=pretrained, prefix='backbone.'),
         text_cfg=dict(type='bert-base', hidden_size=768, 
-                      pretrain_path='./ckpt/bert_embed.pt'),),
+                      pretrain_path='./ckpt/bert_embed_womask.pt'),),
     head_list=dict(
         # non parametric task-specific heads 
         grounding_head=dict(type='UFOViTGroundHead')),
