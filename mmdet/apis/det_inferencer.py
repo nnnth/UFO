@@ -368,6 +368,10 @@ class DetInferencer(BaseInferencer):
         results_dict = {'predictions': [], 'visualization': []}
         for ori_inputs, data in track(inputs, description='Inference'):
             preds = self.forward(data, **forward_kwargs)
+            if 'pred_caption' in preds[0]:
+                print("pred caption", preds[0].pred_caption)
+                results_dict['predictions'].append(preds[0].pred_caption)
+                continue
             visualization = self.visualize(
                 ori_inputs,
                 preds,

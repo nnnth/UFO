@@ -72,7 +72,7 @@ def main():
     
     os.makedirs(args.out_dir, exist_ok=True)
 
-    if args.task in ['detection', 'ins_seg']:
+    if args.task in ['detection', 'ins_seg', 'caption']:
         inferencer = DetInferencer(args.config, weights=args.ckpt_path, scope='mmdet')
         output = inferencer(args.img_path, return_vis=True, show=False, out_dir=args.out_dir)
     elif args.task in ['sem_seg']:
