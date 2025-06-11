@@ -82,8 +82,7 @@ class UFOViTCaptionHead(BaseModule):
               has shape (bs, num_queries, dec_length).
         """
         batch_size = len(reference_preds_list)
-        (input_tokens_list, target_tokens_list, tokens_weights_list, pos_inds_list, 
-         neg_inds_list) = multi_apply(self._get_targets_single_based_on_reference,
+        (input_tokens_list, target_tokens_list, tokens_weights_list) = multi_apply(self._get_targets_single_based_on_reference,
                                 reference_preds_list, batch_gt_instances, 
                                 batch_img_metas, [tokenizer for _ in range(batch_size)])
 
