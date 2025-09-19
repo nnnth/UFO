@@ -20,6 +20,7 @@ This repo is the official implementation of paper: 🛸 [UFO: A Unified Approach
 > - Primary contact: Hao Tang ( tanghao@stu.pku.edu.cn )
 
 ## 📣 News
+- [25-9-19] 🔥 UFO is accepted by NeurIPS 2025 as a spotlight!
 - [25-3-12] We release separate [repos](https://huggingface.co/kanashi6/UFO-InternVL2-8B-instruct) of UFO-InternVL2-8B and add [REC inference](https://github.com/nnnth/UFO/blob/main/InternVL/README_UFO.md) on InternVL repo.
 - [25-3-4] 🚀 Training and inference Code is released.
 - [25-3-3] 👀 UFO is released on [arXiv](http://arxiv.org/abs/2503.01342).
