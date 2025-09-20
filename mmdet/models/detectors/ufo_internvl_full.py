@@ -448,7 +448,7 @@ class UFO_InternVL_Full(BaseDetector, metaclass=ABCMeta):
             else:
                 # use min pos to split responses
                 input_embed = input_embed[:, min_pos:]
-                conversation_ids = conversation_ids[:, min_pos:]
+                conversation_ids = conversation_ids[:, min_pos:].clone()
                 token_weights = token_weights[:, min_pos:]
 
                 pred_seq_logits = self.backbone.language_model.output(input_embed)

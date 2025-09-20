@@ -29,6 +29,7 @@ from .reason_seg import ReasonSegDataset
 from .paco_lvis import PACOLVISDataset
 from .pascal_part import PascalPartDataset
 from .llava_665k import LLaVA665K
+from .llava_onevision import LLaVAOneVision
 __all__ = [
     'XMLDataset', 'CocoDataset', 'DeepFashionDataset', 'VOCDataset',
     'CityscapesDataset', 'LVISDataset', 'LVISV05Dataset', 'LVISV1Dataset',
@@ -40,5 +41,5 @@ __all__ = [
     'COCOStuffDataset','NuimageDataset','OpenImagesDatasetInseg','NuimageSegDataset','MapillaryDataset_v2',
     'ReferSegDataset', 'ReasonSegDataset',
     'PACOLVISDataset', 'PascalPartDataset',
-    'LLaVA665K'
+    'LLaVA665K', 'LLaVAOneVision'
 ]

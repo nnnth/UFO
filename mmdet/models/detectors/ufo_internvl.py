@@ -42,6 +42,7 @@ class UFO_InternVL(BaseDetector, metaclass=ABCMeta):
                  backbone: ConfigType = None, 
                  head_list: OptConfigType = None,
                  use_checkpoints: bool = False,
+                 pretrain_path=None,
                  lora_r=128,
                  lora_alpha=2*128,
                  lora_dropout=0.05,
@@ -90,6 +91,11 @@ class UFO_InternVL(BaseDetector, metaclass=ABCMeta):
         for name,param in self.backbone.named_parameters():
             if not param.requires_grad:
                 print("not require",name)
+        
+        if pretrain_path is not None:
+            msg = self.load_state_dict(torch.load(pretrain_path,map_location=self.backbone.device), strict=False)
+            print(f'load pretrain from {pretrain_path}')
+            print(msg)
 
         # bulid non parametric task-specific heads for label assignment, loss computation and  post-processing
         self.head_list = head_list
@@ -888,11 +894,13 @@ class UFO_InternVL(BaseDetector, metaclass=ABCMeta):
         casual_mask = torch.triu(torch.ones(N, N, device=input_embed.device), diagonal=1).bool()
         text_mask = text_mask[:,None,None,:].expand(-1,1,N,-1)
         attn_mask = text_mask | casual_mask[None, None,:,:].expand(B,1,-1,-1)
-        # patch embed bidirectional
-        img_selected = selected[:, None, :, None].expand(-1, 1, -1, N)
-        img_attn_mask = attn_mask[img_selected]
-        bidr_mask = selected[:, None, None, :].expand(-1, 1, self.num_image_token, -1)
-        attn_mask[img_selected] = img_attn_mask & (~bidr_mask.contiguous().view(-1))
+        # patch embed bidirectional for non vqa task
+        # vqa task still use uni-directional attention to align with pretrained model
+        if self.mode != 'vqa':
+            img_selected = selected[:, None, :, None].expand(-1, 1, -1, N)
+            img_attn_mask = attn_mask[img_selected]
+            bidr_mask = selected[:, None, None, :].expand(-1, 1, self.num_image_token, -1)
+            attn_mask[img_selected] = img_attn_mask & (~bidr_mask.contiguous().view(-1))
 
         # each token can see itself, orelse will cause nan in attention
         if not self.training:

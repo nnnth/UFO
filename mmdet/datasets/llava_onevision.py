@@ -8,17 +8,17 @@ import torch.nn.functional as F
 
 from mmdet.registry import DATASETS
 from mmengine.dataset import BaseDataset
-
+import jsonlines
 
 @DATASETS.register_module()
-class LLaVA665K(BaseDataset):
+class LLaVAOneVision(BaseDataset):
     ignore_label = 255
 
     def __init__(
         self,
-        data_root='data/llava-665k/',
+        data_root='data/llava_onevision/',
         img_dir='data/',
-        vqa_data="llava_v1_5_mix665k.json",
+        vqa_data="train.jsonl",
         **kwargs
     ):
         self.vqa_data = vqa_data
@@ -31,53 +31,54 @@ class LLaVA665K(BaseDataset):
     def load_data_list(self):
         DATA_DIR = self.data_root
         self.vqa_image_root = self.img_dir
+
+        vqa_data = []
         with open(os.path.join(DATA_DIR, self.vqa_data)) as f:
-            vqa_data = json.load(f)
+            for item in jsonlines.Reader(f):
+                vqa_data.append(item)
+        
         data_list = []
-        ignore_count = 0
         for item in vqa_data:
             if 'image' not in item:
-                ignore_count += 1
                 continue
-            
-        
-            img_path = os.path.join(self.vqa_image_root, item["image"])
-            img_path = img_path.replace('gqa','gqa_vqa')
-            img_path = img_path.replace('VG_100K_2','images')
-            img_path = img_path.replace('VG_100K','images')
 
-            if 'ocr_vqa' in img_path:
-                if img_path in [
-                    'data/ocr_vqa/images/1609496760.jpg',
-                    'data/ocr_vqa/images/1580405568.jpg',
-                    'data/ocr_vqa/images/986042501.jpg',
-                    'data/ocr_vqa/images/1844006360.jpg',
-                    'data/ocr_vqa/images/1512198471.jpg',
-                    'data/ocr_vqa/images/1517152860.jpg',
-                    'data/ocr_vqa/images/761181865.jpg'
-                ]:
-                    print(f'not exits {img_path}')
-                    continue
+            img_path = os.path.join(self.vqa_image_root, item["image"])
+            if 'gif' in img_path or 'GIF' in img_path:
+                continue
+
+            # constrain turns
             conversations = item['conversations']
+            if len(conversations) == 1:
+                continue
+            if conversations[0]['from'] == 'gpt':
+                continue
+            if len(conversations) > 6:
+                conversations = conversations[:6]
+            
+            # constrain lens
+            concat_str = ''
+            for k, conv in enumerate(conversations):
+                concat_str += conv['value']
+            if len(concat_str) > 1200:
+                continue
 
             check_answer = False 
-            for conv in conversations:
+            for k, conv in enumerate(conversations):
                 if conv['from'] == 'gpt':
                     if len(conv['value']) == 0:
                         check_answer = True 
                         print("jump no answer",conversations)
                         break
+                if k == 0 and '<image>' not in conv['value']:
+                    conversations[k]['value'] = '<image>\n' + conversations[k]['value']
             if check_answer:
                 continue
-
+ 
             data_info = {
                 'img_path': img_path,
                 'img_id': item['id'],
                 'conversations': conversations
             }
             data_list.append(data_info)
-
-        print(f'ignore {ignore_count}')
-        print("vqa_data: ", len(data_list))
-
+        
         return data_list
