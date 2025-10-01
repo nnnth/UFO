@@ -3,6 +3,7 @@
 # Copyright (c) 2024 OpenGVLab
 # Licensed under The MIT License [see LICENSE for details]
 # --------------------------------------------------------
+
 import warnings
 from typing import Any, List, Optional, Tuple, Union
 
@@ -38,12 +39,13 @@ class InternVLChatModel(PreTrainedModel):
     main_input_name = 'pixel_values'
     base_model_prefix = 'language_model'
     _supports_flash_attn_2 = True
+    supports_gradient_checkpointing = True
     _no_split_modules = ['InternVisionModel', 'LlamaDecoderLayer', 'InternLM2DecoderLayer']
 
     def __init__(self, config: InternVLChatConfig, vision_model=None, language_model=None, use_flash_attn=True):
         super().__init__(config)
 
-        assert version_cmp(transformers.__version__, '4.36.2', 'ge')
+        assert version_cmp(transformers.__version__, '4.37.0', 'ge')
         image_size = config.force_image_size or config.vision_config.image_size
         patch_size = config.vision_config.patch_size
         self.patch_size = patch_size
@@ -56,6 +58,7 @@ class InternVLChatModel(PreTrainedModel):
         config.vision_config.use_flash_attn = True if use_flash_attn else False
         config.llm_config.attn_implementation = 'flash_attention_2' if use_flash_attn else 'eager'
         self.llm_arch_name = config.llm_config.architectures[0]
+
 
         logger.info(f'num_image_token: {self.num_image_token}')
         logger.info(f'ps_version: {self.ps_version}')
@@ -86,7 +89,7 @@ class InternVLChatModel(PreTrainedModel):
         self.img_context_token_id = None
         self.conv_template = get_conv_template(self.template)
         self.system_message = self.conv_template.system_message
-        
+    
     def wrap_backbone_lora(self, r=128, lora_alpha=256, lora_dropout=0.05):
         lora_config = LoraConfig(
             r=r,
@@ -118,7 +121,7 @@ class InternVLChatModel(PreTrainedModel):
         self.language_model = get_peft_model(self.language_model, lora_config)
         self.language_model.enable_input_require_grads()
         self.language_model.print_trainable_parameters()
-    
+
     def forward(
             self,
             pixel_values: torch.FloatTensor,
@@ -145,7 +148,7 @@ class InternVLChatModel(PreTrainedModel):
         B, N, C = input_embeds.shape
         input_embeds = input_embeds.reshape(B * N, C)
 
-        if torch.distributed.get_rank() == 0:
+        if torch.distributed.is_initialized() and torch.distributed.get_rank() == 0:
             print(f'dynamic ViT batch size: {vit_batch_size}, images per sample: {vit_batch_size / B}, dynamic token length: {N}')
 
         input_ids = input_ids.reshape(B * N)
@@ -271,7 +274,7 @@ class InternVLChatModel(PreTrainedModel):
         model_inputs = tokenizer(queries, return_tensors='pt', padding=True)
         input_ids = model_inputs['input_ids'].to(self.device)
         attention_mask = model_inputs['attention_mask'].to(self.device)
-        eos_token_id = tokenizer.convert_tokens_to_ids(template.sep)
+        eos_token_id = tokenizer.convert_tokens_to_ids(template.sep.strip())
         generation_config['eos_token_id'] = eos_token_id
         generation_output = self.generate(
             pixel_values=pixel_values,
@@ -280,7 +283,7 @@ class InternVLChatModel(PreTrainedModel):
             **generation_config
         )
         responses = tokenizer.batch_decode(generation_output, skip_special_tokens=True)
-        responses = [response.split(template.sep)[0].strip() for response in responses]
+        responses = [response.split(template.sep.strip())[0].strip() for response in responses]
         return responses
 
     def chat(self, tokenizer, pixel_values, question, generation_config, history=None, return_history=False,
@@ -299,7 +302,7 @@ class InternVLChatModel(PreTrainedModel):
 
         template = get_conv_template(self.template)
         template.system_message = self.system_message
-        eos_token_id = tokenizer.convert_tokens_to_ids(template.sep)
+        eos_token_id = tokenizer.convert_tokens_to_ids(template.sep.strip())
 
         history = [] if history is None else history
         for (old_question, old_answer) in history:
@@ -328,7 +331,7 @@ class InternVLChatModel(PreTrainedModel):
             **generation_config
         )
         response = tokenizer.batch_decode(generation_output, skip_special_tokens=True)[0]
-        response = response.split(template.sep)[0].strip()
+        response = response.split(template.sep.strip())[0].strip()
         history.append((question, response))
         if return_history:
             return response, history
@@ -348,7 +351,6 @@ class InternVLChatModel(PreTrainedModel):
             visual_features: Optional[torch.FloatTensor] = None,
             generation_config: Optional[GenerationConfig] = None,
             output_hidden_states: Optional[bool] = None,
-            return_dict: Optional[bool] = None,
             **generate_kwargs,
     ) -> torch.LongTensor:
 
@@ -376,9 +378,18 @@ class InternVLChatModel(PreTrainedModel):
             attention_mask=attention_mask,
             generation_config=generation_config,
             output_hidden_states=output_hidden_states,
-            return_dict=return_dict,
             use_cache=True,
             **generate_kwargs,
         )
 
         return outputs
+
+    @property
+    def lm_head(self):
+        return self.language_model.get_output_embeddings()
+
+    def get_input_embeddings(self):
+        return self.language_model.get_input_embeddings()
+
+    def get_output_embeddings(self):
+        return self.language_model.get_output_embeddings()
