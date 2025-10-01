@@ -171,7 +171,10 @@ UFO
 │   │   ├── refs(unc).p
 │   │   ├── instances.json
 
-
+│   ├── llava_onevision
+│   │   ├── images
+│   │   │   ├── *.PNG
+│   │   ├── train.jsonl
 
 ```
 
@@ -366,6 +369,13 @@ wget https://bvisionweb1.cs.unc.edu/licheng/referit/data/refcocog.zip
 wget https://bvisionweb1.cs.unc.edu/licheng/referit/data/refclef.zip
 ```
 download image data from https://www.imageclef.org/SIAPRdata
+
+# LLaVA OneVison
+Download data from https://huggingface.co/datasets/lmms-lab/LLaVA-OneVision-Data, then convert them to `images` folder and `train.jsonl`.
+Each item in `train.jsonl` is like
+```
+{'id': 'identity_1040', 'image': 'identity_1040.PNG', 'conversations': [{'from': 'human', 'value': '<image>\nHint: Please answer the question and provide the final answer at the end.\nQuestion: Subtract all balls. How many objects are left?'}, {'from': 'gpt', 'value': 'The answer is 7'}]}
+```
 
 
 

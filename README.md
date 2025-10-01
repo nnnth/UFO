@@ -94,7 +94,7 @@ RefCOCO Validation Set
 |---------|---------|---------|--------|--------|
 |  UFO-LLaVA-1.5-7B |89.9|76.2|[ckpt](https://huggingface.co/kanashi6/UFO/blob/main/ufo-llava-1.5-7b-instruction.pth)| [config](https://github.com/nnnth/UFO/blob/main/configs/UFO-LLaVA1.5-7B/llava1.5_7b_instruction_12w.py) |
 |  UFO-LLaVA-1.5-7B (ft) |  90.8 | 77.2|[ckpt](https://huggingface.co/kanashi6/UFO/blob/main/ufo-llava-1.5-7b-rec.pth)| [config](https://github.com/nnnth/UFO/blob/main/configs/UFO-LLaVA1.5-7B/llava1.5_7b_rec_ft_2w.py) |
-|  UFO-InternVL2.5-8B  | 91.8 | 80.0|[ckpt](https://huggingface.co/kanashi6/UFO/blob/main/ufo-internvl2_5-8b-instruction.pth)| [config](https://github.com/nnnth/UFO/blob/main/configs/UFO-InternVL2_5-8B/internvl2_5_8b_instruction_896_4w.py) |
+|  UFO-InternVL2.5-8B  | 91.8 | 80.0|[ckpt](https://huggingface.co/kanashi6/UFO/blob/main/ufo-internvl2_5-8b-instruction-896.pth)| [config](https://github.com/nnnth/UFO/blob/main/configs/UFO-InternVL2_5-8B/internvl2_5_8b_instruction_896_4w.py) |
 |  UFO-InternVL2.5-8B (ft)  |93.1|81.0|[ckpt](https://huggingface.co/kanashi6/UFO/blob/main/ufo-internvl2_5-8b-rec.pth)| [config](https://github.com/nnnth/UFO/blob/main/configs/UFO-InternVL2_5-8B/internvl2_5_8b_rec_ft_2w.py) |
 ### Reasoning Segmentation
 
@@ -102,7 +102,7 @@ RefCOCO Validation Set
 |---------|---------|---------|--------|--------|---------|
 |  UFO-LLaVA-1.5-7B |53.8|40.1| 58.2| [ckpt](https://huggingface.co/kanashi6/UFO/blob/main/ufo-llava-1.5-7b-instruction.pth)| [config](https://github.com/nnnth/UFO/blob/main/configs/UFO-LLaVA1.5-7B/llava1.5_7b_instruction_12w.py) |
 |  UFO-LLaVA-1.5-7B (ft) |  58.0 | 46.3|61.7 | [ckpt](https://huggingface.co/kanashi6/UFO/blob/main/ufo-llava-1.5-7b-reasonseg.pth)| [config](https://github.com/nnnth/UFO/blob/main/configs/UFO-LLaVA1.5-7B/llava1.5_7b_reasonseg_ft_1w.py) |
-|  UFO-InternVL2.5-8B  | 60.0 | 48.7| 63.6| [ckpt](https://huggingface.co/kanashi6/UFO/blob/main/ufo-internvl2_5-8b-instruction.pth)| [config](https://github.com/nnnth/UFO/blob/main/configs/UFO-InternVL2_5-8B/internvl2_5_8b_instruction_896_4w.py) |
+|  UFO-InternVL2.5-8B  | 60.0 | 48.7| 63.6| [ckpt](https://huggingface.co/kanashi6/UFO/blob/main/ufo-internvl2_5-8b-instruction-896.pth)| [config](https://github.com/nnnth/UFO/blob/main/configs/UFO-InternVL2_5-8B/internvl2_5_8b_instruction_896_4w.py) |
 |  UFO-InternVL2.5-8B (ft)  |67.0|56.2| 70.4| [ckpt](https://huggingface.co/kanashi6/UFO/blob/main/ufo-internvl2_5-8b-reasonseg.pth)| [config](https://github.com/nnnth/UFO/blob/main/configs/UFO-InternVL2_5-8B/internvl2_5_8b_reasonseg_ft_1w.py) |
 
 ## 🛠️ Quick Start
