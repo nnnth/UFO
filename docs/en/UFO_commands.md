@@ -50,26 +50,35 @@ UFO-ViT-H
 bash tools/dist_train.sh configs/UFO-ViT/multi_fivetask_huge.py ${GPU_NUM} --work-dir ${work_dir}
 ```
 
-#### Multi Task (UFO-InternVL2-8B)
+#### Multi Task (UFO-InternVL2_5-8B)
 448x448
 
 ```shell
-bash tools/dist_train.sh configs/UFO-InternVL2-8B-multitask/multi_448_30w.py  ${GPU_NUM} --work-dir ${work_dir}
+bash tools/dist_train.sh configs/UFO-InternVL2_5-8B-multitask/multi_448_30w.py  ${GPU_NUM} --work-dir ${work_dir}
 ```
 
 896x896
 
 ```shell
-bash tools/dist_train.sh configs/UFO-InternVL2-8B-multitask/multi_896_6w.py  ${GPU_NUM} --work-dir ${work_dir}
+bash tools/dist_train.sh configs/UFO-InternVL2_5-8B-multitask/multi_896_6w.py  ${GPU_NUM} --work-dir ${work_dir}
 ```
 
 #### Instruction Tuning
 
-UFO-InternVL2-8B
+UFO-InternVL2_5-8B 448x448
 
 ```shell
-bash tools/dist_train.sh configs/UFO-InternVL2-8B/internvl2_8b_instruction_12w.py  ${GPU_NUM} --work-dir ${work_dir}
+bash tools/dist_train.sh configs/UFO-InternVL2_5-8B/internvl2_5_8b_instruction_12w.py  ${GPU_NUM} --work-dir ${work_dir}
 ```
+
+Copy the checkpoint for 448x448 resolution as `ufo-internvl2_5-8b-instruction.pth` in root dir, then run next stage:
+
+UFO-InternVL2_5-8B 896x896
+
+```shell
+bash tools/dist_train.sh configs/UFO-InternVL2_5-8B/internvl2_5_8b_instruction_896_4w.py  ${GPU_NUM} --work-dir ${work_dir}
+```
+
 
 UFO-LLaVA-1.5-7B
 
@@ -82,23 +91,23 @@ Please download instruction tuning weight from [huggingface](https://huggingface
 
 ```
 UFO
-|──ufo-internvl2-8b-instruction.pth
+|──ufo-internvl2_5-8b-instruction-896.pth
 |——ufo-llava1.5-7b-instruction.pth
 ```
 
-UFO-InternVL2-8B, REC
+UFO-InternVL2_5-8B, REC
 ```shell
-bash tools/dist_train.sh configs/UFO-InternVL2-8B/internvl2_8b_rec_ft_2w.py  ${GPU_NUM} --work-dir ${work_dir}
+bash tools/dist_train.sh configs/UFO-InternVL2_5-8B/internvl2_5_8b_rec_ft_2w.py  ${GPU_NUM} --work-dir ${work_dir}
 ```
 
-UFO-InternVL2-8B, RES
+UFO-InternVL2_5-8B, RES
 ```shell
-bash tools/dist_train.sh configs/UFO-InternVL2-8B/internvl2_8b_res_ft_2w.py  ${GPU_NUM} --work-dir ${work_dir}
+bash tools/dist_train.sh configs/UFO-InternVL2_5-8B/internvl2_5_8b_res_ft_2w.py  ${GPU_NUM} --work-dir ${work_dir}
 ```
 
-UFO-InternVL2-8B, ReasonSeg
+UFO-InternVL2_5-8B, ReasonSeg
 ```shell
-bash tools/dist_train.sh configs/UFO-InternVL2-8B/internvl2_8b_reasonseg_ft_1w.py  ${GPU_NUM} --work-dir ${work_dir}
+bash tools/dist_train.sh configs/UFO-InternVL2_5-8B/internvl2_5_8b_reasonseg_ft_1w.py  ${GPU_NUM} --work-dir ${work_dir}
 ```
 
 UFO-LLaVA1.5-7B, REC
@@ -198,38 +207,40 @@ UFO-ViT-H
 bash tools/dist_test.sh configs/UFO-ViT/multi_fivetask_huge.py ${ckpt_file} ${GPU_NUM} --work-dir ${work_dir}
 ```
 
-#### Multi-Task (UFO-InternVL2-8B)
+#### Multi-Task (UFO-InternVL2_5-8B)
 As there is a bug in direct evaluation using deepspeed, please set checkpoint path for `pretrain_path` variable in the test config, then execute evaluation in training.
 
 448x448
 
 ```shell
-bash tools/dist_train.sh configs/UFO-InternVL2-8B-multitask/multi_448_30w_test.py  ${GPU_NUM} --work-dir ${work_dir}
+bash tools/dist_train.sh configs/UFO-InternVL2_5-8B-multitask/multi_448_30w_test.py  ${GPU_NUM} --work-dir ${work_dir}
 ```
 
 896x896
 
 ```shell
-bash tools/dist_train.sh configs/UFO-InternVL2-8B-multitask/multi_896_6w_test.py  ${GPU_NUM} --work-dir ${work_dir}
+bash tools/dist_train.sh configs/UFO-InternVL2_5-8B-multitask/multi_896_6w_test.py  ${GPU_NUM} --work-dir ${work_dir}
 ```
 
 #### Instruction tuning
-UFO-InternVL2-8B, REC
+UFO-InternVL2_5-8B, REC
 
 ```shell
-bash tools/dist_test.sh configs/UFO-InternVL2-8B/internvl2_8b_rec_ft_2w.py ${ckpt_file} ${GPU_NUM} --work-dir ${work_dir}
+bash tools/dist_test.sh configs/UFO-InternVL2_5-8B/internvl2_5_8b_rec_ft_2w.py ${ckpt_file} ${GPU_NUM} --work-dir ${work_dir}
 ```
 
-UFO-InternVL2-8B, RES
+For res and reasonseg, we use 896x896 for test, which requires deepspeed to avoid memory issues. Similar to the test of Multi-task above, we use evaluation in training. Please set checkpoint path for `pretrain_path` variable in the test config, then execute evaluation in training:
+
+UFO-InternVL2_5-8B, RES
 
 ```shell
-bash tools/dist_test.sh configs/UFO-InternVL2-8B/internvl2_8b_res_ft_2w.py ${ckpt_file} ${GPU_NUM} --work-dir ${work_dir}
+bash tools/dist_train.sh configs/UFO-InternVL2_5-8B/internvl2_5_8b_res_ft_2w_test.py ${GPU_NUM} --work-dir ${work_dir}
 ```
 
-UFO-InternVL2-8B, ReasonSeg
+UFO-InternVL2_5-8B, ReasonSeg
 
 ```shell
-bash tools/dist_test.sh configs/UFO-InternVL2-8B/internvl2_8b_reasonseg_ft_1w.py ${ckpt_file} ${GPU_NUM} --work-dir ${work_dir}
+bash tools/dist_train.sh configs/UFO-InternVL2_5-8B/internvl2_5_8b_reasonseg_ft_1w.py ${GPU_NUM} --work-dir ${work_dir}
 ```
 
 UFO-LLaVA1.5-7B, REC
