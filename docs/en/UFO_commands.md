@@ -222,6 +222,8 @@ bash tools/dist_train.sh configs/UFO-InternVL2_5-8B-multitask/multi_448_30w_test
 bash tools/dist_train.sh configs/UFO-InternVL2_5-8B-multitask/multi_896_6w_test.py  ${GPU_NUM} --work-dir ${work_dir}
 ```
 
+Another option is to setting the zero stage to 0 if no OOM problem, which is mentioned in [issue](https://github.com/nnnth/UFO/issues/42). Thanks for the contribution for [shuzhangcasia](https://github.com/shuzhangcasia).
+
 #### Instruction tuning
 UFO-InternVL2_5-8B, REC
 
